@@ -10,7 +10,7 @@
 next라는 말에서 알 수 있듯이 next를 통해 미들웨어는 순차적으로 처리된다. (따라서 순서가 중요하다!!)
 
 ## 예시
-로그인 check 미들웨어 - isLoggedIn, isNotLoggedIn 이라는 미들웨어 생성
+- 로그인 check 미들웨어 - isLoggedIn, isNotLoggedIn 이라는 미들웨어 생성
 ```
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()){
@@ -29,7 +29,7 @@ exports.isNotLoggedIn = (req, res, next) => {
   }
 };
 ```
-페이지 요청 전에 로그인이 된 사용자인지 아닌지 판별을 위한 미들웨어 삽입 
+- 페이지 요청 전에 로그인이 된 사용자인지 아닌지 판별을 위한 미들웨어 삽입 
 ```
 router.get('/profile', isLoggedIn, (req, res) => {
   res.render('porfile', { title: '내 정보 - NodeBird' });
@@ -40,7 +40,7 @@ router.get('/join', isNotLoggedIn, (req, res) => {
 });
 
 ```
-로그인 요청에서 미들웨어 내의 미들웨어 사용 예시
+- 로그인 요청에서 미들웨어 내의 미들웨어 사용 예시
 ```
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
