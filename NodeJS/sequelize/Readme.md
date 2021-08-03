@@ -27,3 +27,22 @@ sequelize model:create --name TABLE_NAME  --attributes "COLUMN1:type, COLUMN2:ty
 sequelize model:create --name user --attributes nickName: string, passWord: string
 ```
 migrations 폴더에는 현재 시간을 이름으로 갖는 migration 파일이 생성된다.
+
+## 주의 사항
+- 같은 테이블 간 N:M 관계에서 모델 이름과 컬럼 이름을 따로 정해야 한다. (through 옵션 사용) 
+### through옵션 
+```
+static associate(db) {
+    db.User.hasMany(db.Post);
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'followingId',
+      as: 'Followers',
+      through: 'Follow',
+    });
+    db.User.belongsToMany(db.User, {
+      foreignKey: 'followerId',
+      as: 'Followings',
+      through: 'Follow',
+    });
+  }
+```
